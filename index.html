@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🌊 花蓮戰鬥陀螺現貨追蹤</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 20px rgba(255,107,107,0.5);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #e94560;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .update-time {
+            text-align: center;
+            color: #888;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .card {
+            background: rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .store-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #e94560;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .store-info {
+            font-size: 14px;
+            color: #ccc;
+            line-height: 1.8;
+        }
+        
+        .stock-status {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        
+        .in-stock {
+            background: #00c853;
+            color: #fff;
+        }
+        
+        .low-stock {
+            background: #ffab00;
+            color: #000;
+        }
+        
+        .out-of-stock {
+            background: #e94560;
+            color: #fff;
+        }
+        
+        .unknown {
+            background: #666;
+            color: #fff;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #e94560;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            margin: 25px 0 15px;
+            padding-left: 10px;
+            border-left: 4px solid #e94560;
+        }
+        
+        .product-list {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .product-item {
+            background: rgba(255,255,255,0.05);
+            padding: 12px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .product-name {
+            font-size: 14px;
+        }
+        
+        .product-price {
+            color: #00c853;
+            font-weight: bold;
+        }
+        
+        .tips {
+            background: rgba(233,69,96,0.2);
+            border: 1px dashed #e94560;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 20px;
+        }
+        
+        .tips h3 {
+            color: #e94560;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .tips ul {
+            font-size: 14px;
+            padding-left: 20px;
+            line-height: 1.8;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #666;
+            font-size: 12px;
+        }
+        
+        .last-update {
+            background: rgba(0,200,83,0.2);
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            border: 1px solid #00c853;
+        }
+        
+        .refresh-btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: #e94560;
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        
+        .refresh-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .admin-btn {
+            background: rgba(255,255,255,0.1);
+            border: 1px solid #666;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .modal.active {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: #1a1a2e;
+            padding: 25px;
+            border-radius: 16px;
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        .modal h2 {
+            margin-bottom: 20px;
+            color: #e94560;
+        }
+        
+        .input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #444;
+            border-radius: 8px;
+            background: #16213e;
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        
+        .input:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+    </style>
+</head>
+<body>
+    <h1>🌀 花蓮戰鬥陀螺現貨追蹤</h1>
+    <p class="subtitle">戰鬥陀螺X Beyblade X 現貨查詢</p>
+    
+    <div class="last-update" id="lastUpdate">
+        📅 最後更新：<span id="updateTime">載入中...</span>
+    </div>
+    
+    <h2 class="section-title">🏪 花蓮玩具店</h2>
+    
+    <div class="card" id="storeList">
+        <!-- 動態載入商店列表 -->
+    </div>
+    
+    <h2 class="section-title">📦 熱門款式參考</h2>
+    <div class="card">
+        <div class="product-list">
+            <div class="product-item">
+                <span class="product-name">BX-49 蒼龍突擊</span>
+                <span class="product-price">$899</span>
+            </div>
+            <div class="product-item">
+                <span class="product-name">CX-07 天馬爆擊</span>
+                <span class="product-price">$899</span>
+            </div>
+            <div class="product-item">
+                <span class="product-name">BX-38 鯊魚毀滅者</span>
+                <span class="product-price">$899</span>
+            </div>
+            <div class="product-item">
+                <span class="product-name">DX-09 獨角獸平衡</span>
+                <span class="product-price">$899</span>
+            </div>
+            <div class="product-item">
+                <span class="product-name">BX-00 神杖破壞者</span>
+                <span class="product-price">$899</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="tips">
+        <h3>💡 購買攻略</h3>
+        <ul>
+            <li>🔥 熱門款式經常秒殺，補貨通知發布後要快！</li>
+            <li>📱 建議追蹤各店 Facebook/IG 獲得最新消息</li>
+            <li>🛒 部分店家提供電話預留服務，可先詢問</li>
+            <li>🎯 Funbox 官網時常有原價現貨補貨</li>
+        </ul>
+    </div>
+    
+    <button class="refresh-btn" onclick="refreshData()">
+        🔄 更新查詢
+    </button>
+    
+    <button class="refresh-btn admin-btn" onclick="openAdmin()">
+        ⚙️ 管理員更新現貨
+    </button>
+    
+    <div class="footer">
+        <p>📍 資料僅供參考，實際庫存以店家公告為準</p>
+        <p>🔔 建議追蹤 Beyblade Hunter 獲得完整補貨資訊</p>
+    </div>
+    
+    <!-- 管理員 Modal -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <h2>⚙️ 更新現貨狀態</h2>
+            <input type="password" class="input" id="adminPassword" placeholder="請輸入管理員密碼">
+            <select class="input" id="storeSelect">
+                <option value="huatai">華泰玩具花蓮店</option>
+                <option value="toy888">888玩具超人</option>
+            </select>
+            <select class="input" id="stockSelect">
+                <option value="in-stock">✅ 有現貨</option>
+                <option value="low-stock">⚠️ 少量現貨</option>
+                <option value="out-of-stock">❌ 缺貨</option>
+                <option value="unknown">❓ 不確定</option>
+            </select>
+            <input type="text" class="input" id="stockNote" placeholder="補充說明（選填）">
+            <button class="refresh-btn" onclick="updateStock()">儲存更新</button>
+            <button class="refresh-btn admin-btn" onclick="closeAdmin()">取消</button>
+        </div>
+    </div>
+
+    <script>
+        // 預設商店資料
+        let stores = {
+            huatai: {
+                name: '華泰玩具花蓮店',
+                address: '花蓮縣花蓮市和平路589巷2號',
+                phone: '03-936-7113',
+                hours: '平日 10:00-21:00 / 週末 10:00-22:00',
+                facebook: 'https://www.facebook.com/HuataiHualien/',
+                instagram: 'https://www.instagram.com/huataitoyshualien/',
+                stock: 'unknown',
+                note: '花蓮最大玩具店，有舉辦過陀螺比賽'
+            },
+            toy888: {
+                name: '888玩具超人 文叔叔',
+                address: '花蓮市區',
+                phone: '888玩具超人',
+                hours: '詳見 FB/IG',
+                facebook: 'https://www.instagram.com/888ezgo/',
+                instagram: 'https://www.instagram.com/888ezgo/',
+                stock: 'unknown',
+                note: '兒童玩具專賣店，蝦皮同步販售'
+            }
+        };
+        
+        // 載入本地儲存的資料
+        function loadData() {
+            const saved = localStorage.getItem('hualien_beyblade_stores');
+            if (saved) {
+                const savedStores = JSON.parse(saved);
+                for (let key in savedStores) {
+                    if (stores[key]) {
+                        stores[key].stock = savedStores[key].stock;
+                        stores[key].note = savedStores[key].note || stores[key].note;
+                        stores[key].lastUpdate = savedStores[key].lastUpdate;
+                    }
+                }
+            }
+            
+            const lastUpdate = localStorage.getItem('hualien_beyblade_lastUpdate');
+            if (lastUpdate) {
+                document.getElementById('updateTime').textContent = lastUpdate;
+            }
+            
+            renderStores();
+        }
+        
+        // 渲染商店列表
+        function renderStores() {
+            const container = document.getElementById('storeList');
+            container.innerHTML = '';
+            
+            for (let key in stores) {
+                const store = stores[key];
+                const stockClass = getStockClass(store.stock);
+                const stockText = getStockText(store.stock);
+                
+                let noteHtml = '';
+                if (store.note) {
+                    noteHtml = `<p style="margin-top:10px;font-size:13px;color:#aaa;">📝 ${store.note}</p>`;
+                }
+                
+                let lastUpdateHtml = '';
+                if (store.lastUpdate) {
+                    lastUpdateHtml = `<p style="font-size:11px;color:#666;margin-top:5px;">更新：${store.lastUpdate}</p>`;
+                }
+                
+                container.innerHTML += `
+                    <div class="store-name">
+                        ${store.name}
+                        <span class="stock-status ${stockClass}">${stockText}</span>
+                    </div>
+                    <div class="store-info">
+                        📍 ${store.address}<br>
+                        📞 ${store.phone}<br>
+                        ⏰ ${store.hours}
+                    </div>
+                    ${noteHtml}
+                    ${lastUpdateHtml}
+                    <div style="margin-top:10px;">
+                        <a href="${store.facebook}" target="_blank" class="btn">📘 Facebook</a>
+                        <a href="${store.instagram}" target="_blank" class="btn">📸 Instagram</a>
+                    </div>
+                `;
+            }
+        }
+        
+        // 取得庫存狀態 CSS 類別
+        function getStockClass(status) {
+            switch(status) {
+                case 'in-stock': return 'in-stock';
+                case 'low-stock': return 'low-stock';
+                case 'out-of-stock': return 'out-of-stock';
+                default: return 'unknown';
+            }
+        }
+        
+        // 取得庫存狀態文字
+        function getStockText(status) {
+            switch(status) {
+                case 'in-stock': return '✅ 有現貨';
+                case 'low-stock': return '⚠️ 少量現貨';
+                case 'out-of-stock': return '❌ 缺貨';
+                default: return '❓ 待查詢';
+            }
+        }
+        
+        // 開啟管理員 Modal
+        function openAdmin() {
+            document.getElementById('adminModal').classList.add('active');
+        }
+        
+        // 關閉管理員 Modal
+        function closeAdmin() {
+            document.getElementById('adminModal').classList.remove('active');
+        }
+        
+        // 更新現貨狀態
+        function updateStock() {
+            const password = document.getElementById('adminPassword').value;
+            if (password !== '8888') {
+                alert('密碼錯誤！');
+                return;
+            }
+            
+            const storeKey = document.getElementById('storeSelect').value;
+            const stock = document.getElementById('stockSelect').value;
+            const note = document.getElementById('stockNote').value;
+            
+            const now = new Date();
+            const timeStr = now.toLocaleString('zh-TW');
+            
+            stores[storeKey].stock = stock;
+            stores[storeKey].note = note || stores[storeKey].note;
+            stores[storeKey].lastUpdate = timeStr;
+            
+            // 儲存到 localStorage
+            const saveData = {};
+            saveData[storeKey] = {
+                stock: stock,
+                note: note,
+                lastUpdate: timeStr
+            };
+            localStorage.setItem('hualien_beyblade_stores', JSON.stringify(saveData));
+            localStorage.setItem('hualien_beyblade_lastUpdate', timeStr);
+            
+            document.getElementById('updateTime').textContent = timeStr;
+            renderStores();
+            closeAdmin();
+            alert('✅ 現貨狀態已更新！');
+        }
+        
+        // 刷新資料
+        function refreshData() {
+            loadData();
+            alert('🔄 資料已刷新！');
+        }
+        
+        // 頁面載入時讀取資料
+        window.onload = loadData;
+    </script>
+</body>
+</html>
