@@ -260,7 +260,7 @@
         <!-- 動態載入商店列表 -->
     </div>
     
-    <h2 class="section-title">📦 熱門款式參考</h2>
+    <h2 class="section-title">📦 熱門款式參考價</h2>
     <div class="card">
         <div class="product-list">
             <div class="product-item">
@@ -276,12 +276,20 @@
                 <span class="product-price">$899</span>
             </div>
             <div class="product-item">
+                <span class="product-name">BX-00 神杖破壞者</span>
+                <span class="product-price">$899</span>
+            </div>
+            <div class="product-item">
+                <span class="product-name">UX-12 忍者闇影</span>
+                <span class="product-price">$899</span>
+            </div>
+            <div class="product-item">
                 <span class="product-name">DX-09 獨角獸平衡</span>
                 <span class="product-price">$899</span>
             </div>
             <div class="product-item">
-                <span class="product-name">BX-00 神杖破壞者</span>
-                <span class="product-price">$899</span>
+                <span class="product-name">🔥 對戰組 (含發射器)</span>
+                <span class="product-price">$1,299</span>
             </div>
         </div>
     </div>
@@ -317,9 +325,9 @@
             <select class="input" id="storeSelect">
                 <option value="huatai">華泰玩具花蓮店</option>
                 <option value="toy888">888玩具超人</option>
+                <option value="funbox_il">Funbox 宜蘭新月廣場</option>
                 <option value="funbox">Funbox 官網直營</option>
                 <option value="shopee">Funbox 蝦皮官方旗艦店</option>
-                <option value="eslite">誠品書店 線上</option>
             </select>
             <select class="input" id="stockSelect">
                 <option value="in-stock">✅ 有現貨</option>
@@ -337,24 +345,34 @@
         // 預設商店資料
         let stores = {
             huatai: {
-                name: '華泰玩具花蓮店',
+                name: '🏪 華泰玩具花蓮店',
                 address: '花蓮縣花蓮市和平路589巷2號',
                 phone: '03-936-7113',
                 hours: '平日 10:00-21:00 / 週末 10:00-22:00',
                 facebook: 'https://www.facebook.com/HuataiHualien/',
                 instagram: 'https://www.instagram.com/huataitoyshualien/',
                 stock: 'unknown',
-                note: '花蓮最大玩具店，有舉辦過陀螺比賽'
+                note: '🌟 花蓮最大玩具店，曾舉辦陀螺比賽'
             },
             toy888: {
-                name: '888玩具超人 文叔叔',
-                address: '花蓮市區',
-                phone: '888玩具超人',
+                name: '🧸 888玩具超人',
+                address: '花蓮市區（詳見FB/IG）',
+                phone: '詳見 FB/IG',
                 hours: '詳見 FB/IG',
                 facebook: 'https://www.instagram.com/888ezgo/',
                 instagram: 'https://www.instagram.com/888ezgo/',
                 stock: 'unknown',
-                note: '兒童玩具專賣店，蝦皮同步販售'
+                note: '玩具專賣，蝦皮同步販售'
+            },
+            funbox_il: {
+                name: '🛍️ Funbox 宜蘭新月廣場',
+                address: '宜蘭縣宜蘭市和睦路1號 新月廣場',
+                phone: '03-932-1888',
+                hours: '11:00-22:00',
+                facebook: 'https://shop.funbox.com.tw/',
+                instagram: '',
+                stock: 'unknown',
+                note: '📍 花蓮最近的Funbox百貨專櫃，約1小時車程'
             },
             funbox: {
                 name: '🎯 Funbox 官網直營',
@@ -364,7 +382,7 @@
                 facebook: 'https://shop.funbox.com.tw/',
                 instagram: 'https://www.instagram.com/funbox.tw/',
                 stock: 'unknown',
-                note: '✅ 台灣官方正版，時常有補貨，建議追蹤'
+                note: '✅ 台灣官方正版，時常有補貨'
             },
             shopee: {
                 name: '🛒 Funbox 蝦皮官方旗艦店',
@@ -375,16 +393,6 @@
                 instagram: '',
                 stock: 'unknown',
                 note: '✅ 官方授權，正版現貨，熱門款常秒殺'
-            },
-            eslite: {
-                name: '📚 誠品書店 線上',
-                address: '誠品線上/eslite.com',
-                phone: '線上購買',
-                hours: '24小時',
-                facebook: 'https://www.eslite.com/',
-                instagram: 'https://www.instagram.com/eslite_taiwan/',
-                stock: 'unknown',
-                note: '✅ 正版經銷商，部分門市有現貨'
             }
         };
         
