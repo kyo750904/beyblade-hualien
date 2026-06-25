@@ -317,6 +317,9 @@
             <select class="input" id="storeSelect">
                 <option value="huatai">華泰玩具花蓮店</option>
                 <option value="toy888">888玩具超人</option>
+                <option value="funbox">Funbox 官網直營</option>
+                <option value="shopee">Funbox 蝦皮官方旗艦店</option>
+                <option value="eslite">誠品書店 線上</option>
             </select>
             <select class="input" id="stockSelect">
                 <option value="in-stock">✅ 有現貨</option>
@@ -352,6 +355,36 @@
                 instagram: 'https://www.instagram.com/888ezgo/',
                 stock: 'unknown',
                 note: '兒童玩具專賣店，蝦皮同步販售'
+            },
+            funbox: {
+                name: '🎯 Funbox 官網直營',
+                address: '線上商店',
+                phone: '線上購買',
+                hours: '24小時',
+                facebook: 'https://shop.funbox.com.tw/',
+                instagram: 'https://www.instagram.com/funbox.tw/',
+                stock: 'unknown',
+                note: '✅ 台灣官方正版，時常有補貨，建議追蹤'
+            },
+            shopee: {
+                name: '🛒 Funbox 蝦皮官方旗艦店',
+                address: '蝦皮購物',
+                phone: '線上購買',
+                hours: '24小時',
+                facebook: 'https://shopee.tw/funbox.tw',
+                instagram: '',
+                stock: 'unknown',
+                note: '✅ 官方授權，正版現貨，熱門款常秒殺'
+            },
+            eslite: {
+                name: '📚 誠品書店 線上',
+                address: '誠品線上/eslite.com',
+                phone: '線上購買',
+                hours: '24小時',
+                facebook: 'https://www.eslite.com/',
+                instagram: 'https://www.instagram.com/eslite_taiwan/',
+                stock: 'unknown',
+                note: '✅ 正版經銷商，部分門市有現貨'
             }
         };
         
@@ -410,8 +443,8 @@
                     ${noteHtml}
                     ${lastUpdateHtml}
                     <div style="margin-top:10px;">
-                        <a href="${store.facebook}" target="_blank" class="btn">📘 Facebook</a>
-                        <a href="${store.instagram}" target="_blank" class="btn">📸 Instagram</a>
+                        <a href="${store.facebook}" target="_blank" class="btn">${getStoreBtn(store.facebook)}</a>
+                        ${store.instagram ? `<a href="${store.instagram}" target="_blank" class="btn">📸 Instagram</a>` : ''}
                     </div>
                 `;
             }
@@ -435,6 +468,15 @@
                 case 'out-of-stock': return '❌ 缺貨';
                 default: return '❓ 待查詢';
             }
+        }
+        
+        // 取得商店按鈕文字
+        function getStoreBtn(url) {
+            if (url.includes('facebook.com') || url.includes('fb.')) return '📘 Facebook';
+            if (url.includes('funbox')) return '🛒 Funbox官網';
+            if (url.includes('shopee')) return '🛒 蝦皮商城';
+            if (url.includes('eslite')) return '📚 誠品線上';
+            return '🌐 前往購買';
         }
         
         // 開啟管理員 Modal
